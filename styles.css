@@ -1,3 +1,4 @@
+
 body {
     background: linear-gradient(to bottom, #3494e6, #ec6ead);
     background-size: cover;
@@ -47,4 +48,11 @@ button {
 
 button:hover {
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+#shapeName {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
 }
