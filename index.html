@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Face Shape Detection</title>
+    <title>Friendship Bond Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Face Shape Detection</h1>
-        <video id="video" playsinline autoplay></video>
-        <canvas id="canvas"></canvas>
-        <button id="startButton">Start Detection</button>
-        <div id="shapeName"></div>
+        <h1>Friendship Bond Calculator</h1>
+        <div class="input-container">
+            <input type="text" id="name1" placeholder="Enter first name">
+            <input type="text" id="name2" placeholder="Enter second name">
+            <button onclick="calculateBond()">Calculate Bond</button>
+        </div>
+        <div id="result"></div>
     </div>
+    <audio id="cheer-sound" src="cheer.mp3"></audio>
+    <audio id="whistle-sound" src="whistle.mp3"></audio>
     <script src="script.js"></script>
 </body>
 </html>
