@@ -1,51 +1,52 @@
-const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const startButton = document.getElementById('startButton');
-const shapeNameDiv = document.getElementById('shapeName');
+function calculateBond() {
+    const name1 = document.getElementById('name1').value.trim().toLowerCase();
+    const name2 = document.getElementById('name2').value.trim().toLowerCase();
+    const resultDiv = document.getElementById('result');
+    const cheerSound = document.getElementById('cheer-sound');
+    const whistleSound = document.getElementById('whistle-sound');
 
-async function setupCamera() {
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video: true
-    });
-    video.srcObject = stream;
-    await new Promise((resolve) => {
-        video.onloadedmetadata = () => {
-            resolve(video);
-        };
-    });
-}
+    if (name1 === '' || name2 === '') {
+        resultDiv.textContent = 'Please enter both names.';
+        return;
+    }
 
-async function detectFaceShape() {
-    const videoWidth = video.videoWidth;
-    const videoHeight = video.videoHeight;
-    canvas.width = videoWidth;
-    canvas.height = videoHeight;
+    let bondScore = calculateBondScore(name1, name2);
 
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+    resultDiv.textContent = `Bond Score: ${bondScore}`;
 
-    // Example: You would typically use a face detection library like face-api.js or TensorFlow.js for face detection and landmark detection
-    // For demonstration purposes, a random shape is shown based on video dimensions
-    const shape = getFaceShape(videoWidth, videoHeight); // Replace this with actual face detection logic
-    shapeNameDiv.textContent = `Detected Shape: ${shape}`;
-}
-
-function getFaceShape(videoWidth, videoHeight) {
-    // Example: Randomly return one of the shapes based on video dimensions
-    if (videoWidth > videoHeight) {
-        return 'Rectangle';
-    } else {
-        return 'Square';
+    if (bondScore > 100) {
+        resultDiv.innerHTML += '<br>Cheers! 🎉';
+        cheerSound.play();
+        showAnimation('cheer-animation', '🎉');
+    } else if (bondScore >= 50) {
+        resultDiv.innerHTML += '<br>Not bad! 👏';
+        whistleSound.play();
+        showAnimation('clap-animation', '👏');
+    } else if (bondScore < 10) {
+        resultDiv.innerHTML += '<br>Got to shit! 😔';
     }
 }
 
-startButton.addEventListener('click', () => {
-    setupCamera();
-    startButton.disabled = true;
-    video.addEventListener('loadeddata', () => {
-        detectFaceShape();
-        video.play();
-    });
-});
+function calculateBondScore(name1, name2) {
+    let score = 0;
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    
+    for (let char of name1 + name2) {
+        score += letters.indexOf(char) + 1;
+    }
+
+    return score;
+}
+
+function showAnimation(className, symbol) {
+    const animationDiv = document.createElement('div');
+    animationDiv.className = className;
+    animationDiv.textContent = symbol;
+    document.body.appendChild(animationDiv);
+
+    setTimeout(() => {
+        animationDiv.remove();
+    }, 2000);
+}
+
 
