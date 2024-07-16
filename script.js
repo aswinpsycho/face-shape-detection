@@ -14,15 +14,15 @@ function calculateBond() {
 
     resultDiv.textContent = `Bond Score: ${bondScore}`;
 
-    if (bondScore > 100) {
+    if (bondScore > 250) {
         resultDiv.innerHTML += '<br>Cheers! 🎉';
         cheerSound.play();
         showAnimation('cheer-animation', '🎉');
-    } else if (bondScore >= 50) {
+    } else if (bondScore >= 100) {
         resultDiv.innerHTML += '<br>Not bad! 👏';
         whistleSound.play();
         showAnimation('clap-animation', '👏');
-    } else if (bondScore < 10) {
+    } else if (bondScore < 50) {
         resultDiv.innerHTML += '<br>Got to shit! 😔';
     }
 }
